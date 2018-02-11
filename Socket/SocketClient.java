@@ -4,17 +4,23 @@ import java.net.*;
 
 public class SocketClient {
 	public static void main(String[] args) throws Exception {
-		int number,temp;
     String characterGuess;
 		Scanner ScannerSystem = new Scanner(System.in);
-		Socket SocketServer = new Socket("localhost",2333);
 
+    //Make a scoket and connect it to <host,port>
+		Socket SocketServer = new Socket("localhost",1234);
+
+    //Start
     System.out.println("--------Start!--------");
 
+    //Get read stream
 		Scanner InputScanner = new Scanner(SocketServer.getInputStream());
-		String TextInput = input.nextLine();
+		String TextInput = InputScanner.nextLine();
+
+    //Get write stream
     PrintStream OutputStream = new PrintStream(SocketServer.getOutputStream());
-    while ( !(Text.indexOf('*') < 0)){
+
+    while ( !(TextInput.indexOf('*') < 0)){
         	System.out.println(TextInput);
         	characterGuess = ScannerSystem.nextLine();
           OutputStream.println(characterGuess);
