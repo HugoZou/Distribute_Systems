@@ -1,9 +1,14 @@
+// java Chat_v2
+// java Chat_v2 client localhost firstname
+// java Chat_v2 client localhost secondname
+// java Chat_v2 client localhost thirdname
+// Exit
 import java.io.*;
 import java.util.*;
 import java.net.*;
 
-public class ImprovedChat{
-	static final int port = 1234;
+public class Chat_v2{
+	static final int port = 12345;
 
 	static BufferedReader getReader(InputStream is){
 		return new BufferedReader(new InputStreamReader(is));
@@ -22,6 +27,7 @@ public class ImprovedChat{
 	static class AllSockets{
 		static private Vector<Socket> allSockets = new Vector<Socket>();
 
+    //Access to AllSockets is synchronized to avoid simultaneous element addition and for-loop
 		synchronized static public void Add(Socket client) {
       allSockets.add(client); }
 
@@ -58,8 +64,8 @@ public class ImprovedChat{
 		BufferedWriter out = getWriter(s.getOutputStream());
         String inputMessage = in.readLine();
 
-		for (;;){
-		   if ( inputMessage.equals("*quit") ) {
+		while(1){
+		   if ( inputMessage.equals("Exit") ) {
 		   	  writeString("",out);
 		   	  break;
 		   }
@@ -87,12 +93,11 @@ public class ImprovedChat{
  				AllSockets.Remove(client);
 			}catch(Exception e) {}
 	  }
-
 	}
 
 	static void Server() throws Exception{
 		ServerSocket s = new ServerSocket(port);
-		for(;;){
+		while(1){
 			System.out.println("Listening ...");
 			Socket client = s.accept();
 			AllSockets.Add(client);
